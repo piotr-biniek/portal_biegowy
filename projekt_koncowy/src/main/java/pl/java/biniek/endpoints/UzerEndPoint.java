@@ -53,8 +53,10 @@ public class UzerEndPoint implements Serializable {
     private ThemeEndPoint themeEndPoint;
     
     @RolesAllowed("Administrator")
-    public void remove(Uzer uzer) throws BasicApplicationException {
+    public void remove(Uzer uzer) throws BasicApplicationException {//todo porządek z themami
+            String uzerMail = uzer.getEmail();
             uzerFacade.remove(uzer);
+            themeEndPoint.removeThemeOfDeletedUzer(uzerMail);
     
 
     }
@@ -149,11 +151,11 @@ public class UzerEndPoint implements Serializable {
     public boolean  checkEmailExistsInDB(String email){
         return uzerFacade.checkIfEmailExists(email);
     }
-   @RolesAllowed({"Administrator"})   
-public void remove(Administrator admin){
-    adminFacade.remove(admin);
-    
-}
+//   @RolesAllowed({"Administrator"})   
+//public void remove(Administrator admin){
+//    adminFacade.remove(admin);
+//    
+//}
 @RolesAllowed({"Administrator"})   
 public List<Administrator> getAllAdministrators(){
    return adminFacade.findAll();

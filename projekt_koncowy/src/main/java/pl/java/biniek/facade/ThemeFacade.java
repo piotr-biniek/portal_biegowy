@@ -15,18 +15,19 @@ import javax.persistence.Query;
 import pl.java.biniek.exception.interceptor.backend.ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE;
 import pl.java.biniek.uzertheme.UzerTheme;
 import pl.java.biniek.model.Uzer;
+
 /**
  *
  * @author samsung
  */
 @Stateless
 @Interceptors(ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE.class)
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ThemeFacade extends AbstractFacade<UzerTheme> {
 
     @PersistenceContext(unitName = "com.mycompany_aProjektKoncowy02_war_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -35,37 +36,32 @@ public class ThemeFacade extends AbstractFacade<UzerTheme> {
     public ThemeFacade() {
         super(UzerTheme.class);
     }
-    
 
     public UzerTheme findThemeByUser(Uzer user) {
-       
-              Query tq = em.createQuery("SELECT d FROM UzerTheme d WHERE d.uzerId = ?1 ", UzerTheme.class);
-              tq.setParameter(1, user.getId());
-//            
-//            TypedQuery<Payment> tq = em.createNamedQuery("Payment.findByCourseAndRunner", Payment.class);
-//            tq.setParameter(1, course);
-//            tq.setParameter(2, runner);
 
-            
-               return (UzerTheme) tq.getSingleResult();
-            
-         
-       
+        return findThemeBymail(user.getEmail());
+    }
 
-            }
+    public UzerTheme findThemeBymail(String email) {
 
-    
-    public void removeThemeByUserId(long userId) {
-       
-              Query tq = em.createQuery("DELETE d FROM UzerTheme d WHERE d.uzerId = ?1 ", UzerTheme.class);
-              tq.setParameter("uzerId", userId);
-          
-                tq.executeUpdate();
-             }
+        Query tq = em.createQuery("SELECT d FROM UzerTheme d WHERE d.uzerEmail = ?1 ", UzerTheme.class);
+        tq.setParameter(1, email);
 
-        }
-    
+        return (UzerTheme) tq.getSingleResult();
 
+    }
 
-    
+    public void removeThemeByUserMail(String uzerMail) {// todo zrobić porządek z themami - przeniesc tworzenie do 1go logowania
+        UzerTheme ut = findThemeBymail(uzerMail);
+        remove(ut);
+    }
 
+}
+
+//    public void removeThemeByUserId(long userId) {// todo zrobić porządek z themami - przeniesc tworzenie do 1go logowania
+//       
+//              Query tq = em.createQuery("DELETE d FROM UzerTheme d WHERE d.uzerId = ?1 ", UzerTheme.class);
+//              tq.setParameter("uzerId", userId);
+//          
+//                tq.executeUpdate();
+//             }

@@ -6,11 +6,8 @@
 package pl.java.biniek.uzertheme;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import pl.java.biniek.model.AbstractEntity;
 
 @Entity
@@ -23,25 +20,25 @@ public class UzerTheme extends AbstractEntity implements Serializable {//user
 
     @Id
     @Column(name = "id", updatable = false)
-    @TableGenerator(name = "Theme", table = "GENERATOR", pkColumnName = "ENTITY_NAME", valueColumnName = "ID_RANGE", pkColumnValue = "User", initialValue = 400, allocationSize = 6053)
+    @TableGenerator(name = "Theme", table = "GENERATOR", pkColumnName = "ENTITY_NAME", valueColumnName = "ID_RANGE", pkColumnValue = "User", initialValue = 40000, allocationSize = 6053)
     @GeneratedValue(strategy = GenerationType.TABLE,
             generator = "UserGen")
     private Long id;
 
-    @NotNull
+    //@NotNull
     @Column(nullable = false, unique = true)
-    private long uzerId;
+    private String uzerEmail;
     
-    @NotNull
+    //@NotNull
     @Column(nullable = false)
     private String theme;
 
-    public long getUzerId() {
-        return uzerId;
+    public String getUzerId() {
+        return uzerEmail;
     }
 
-    public void setUzerId(long uzerId) {
-        this.uzerId = uzerId;
+    public void setUzerEmail(String uzerEmail) {
+        this.uzerEmail = uzerEmail;
     }
 
     public String getThemeType() {
@@ -62,7 +59,7 @@ public class UzerTheme extends AbstractEntity implements Serializable {//user
 
     @Override
     protected String getBusinessKey() {
-        return "ThemeID: "+id+" Uzer: "+uzerId+", theme: "+theme;
+        return "ThemeID: "+id+" Uzer: "+uzerEmail+", theme: "+theme;
     }
     
        
