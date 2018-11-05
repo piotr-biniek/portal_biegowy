@@ -20,9 +20,9 @@ public class UzerTheme extends AbstractEntity implements Serializable {//user
 
     @Id
     @Column(name = "id", updatable = false)
-    @TableGenerator(name = "Theme", table = "GENERATOR", pkColumnName = "ENTITY_NAME", valueColumnName = "ID_RANGE", pkColumnValue = "User", initialValue = 40000, allocationSize = 6053)
+    @TableGenerator(name = "Theme", table = "ThemeGENERATOR", pkColumnName = "ENTITY_NAME", valueColumnName = "ID_RANGE",  initialValue = 40000, allocationSize = 6053)
     @GeneratedValue(strategy = GenerationType.TABLE,
-            generator = "UserGen")
+            generator = "ThemeGen")
     private Long id;
 
     //@NotNull

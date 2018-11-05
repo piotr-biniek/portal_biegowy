@@ -15,6 +15,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.faces.context.FacesContext;
 import javax.interceptor.Interceptors;
+import pl.java.biniek.endpoints.service.themeinterceptor.ThemeCreateDeleteInterceptor;
 import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.exceptions.NullPointerApplicationException;
 import pl.java.biniek.exceptions.WrongUzerApplicationException;
@@ -53,10 +54,11 @@ public class UzerEndPoint implements Serializable {
     private ThemeEndPoint themeEndPoint;
     
     @RolesAllowed("Administrator")
+    @Interceptors(ThemeCreateDeleteInterceptor.class)
     public void remove(Uzer uzer) throws BasicApplicationException {//todo porządek z themami
             String uzerMail = uzer.getEmail();
             uzerFacade.remove(uzer);
-            themeEndPoint.removeThemeOfDeletedUzer(uzerMail);
+        //    themeEndPoint.removeThemeOfDeletedUzer(uzerMail);
     
 
     }
@@ -70,13 +72,14 @@ public class UzerEndPoint implements Serializable {
         return uzerFacade.findUzerByEmail(email);
 
     }
-
+@Interceptors(ThemeCreateDeleteInterceptor.class)
+//@TransactionManagement(TransactionManagementType.BEAN) 
     public void createUzer(Uzer uzer) throws BasicApplicationException {
         uzerFacade.create(uzer);
-        themeEndPoint.createThemeForNewUzer(uzer);
+//        themeEndPoint.createThemeForNewUzer(uzer);
         
     }
-
+    
     public Uzer getLoggedUser() {
         //    String email = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         Uzer uzer = findUzerByEmail(this.getLoggedUserEmail());
@@ -151,11 +154,7 @@ public class UzerEndPoint implements Serializable {
     public boolean  checkEmailExistsInDB(String email){
         return uzerFacade.checkIfEmailExists(email);
     }
-//   @RolesAllowed({"Administrator"})   
-//public void remove(Administrator admin){
-//    adminFacade.remove(admin);
-//    
-//}
+
 @RolesAllowed({"Administrator"})   
 public List<Administrator> getAllAdministrators(){
    return adminFacade.findAll();

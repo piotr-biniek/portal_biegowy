@@ -38,10 +38,10 @@ public class ThemeEndPoint implements Serializable {
 
     }
 
-    public void createThemeForNewUzer(Uzer uzer) throws BasicApplicationException {
+    public void createThemeForNewUzer(String uzerEmail) throws BasicApplicationException {
         UzerTheme theme = new UzerTheme();
         theme.setThemeType("sunny");
-        theme.setUzerEmail(uzer.getEmail());
+        theme.setUzerEmail(uzerEmail);
         themeFacade.create(theme);
     }
 
