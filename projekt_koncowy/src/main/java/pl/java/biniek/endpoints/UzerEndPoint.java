@@ -35,7 +35,9 @@ import pl.java.biniek.model.Uzer;
  * @author java pbi moje!!!!!
  */
 @Stateless
-@Interceptors(LoggingInterceptorWithRepackingForEndPoint.class)
+
+@Interceptors({ThemeCreateDeleteInterceptor.class,LoggingInterceptorWithRepackingForEndPoint.class})
+//@Interceptors()
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class UzerEndPoint implements Serializable {
 
@@ -72,7 +74,7 @@ public class UzerEndPoint implements Serializable {
         return uzerFacade.findUzerByEmail(email);
 
     }
-@Interceptors(ThemeCreateDeleteInterceptor.class)
+//@Interceptors(ThemeCreateDeleteInterceptor.class)
 //@TransactionManagement(TransactionManagementType.BEAN) 
     public void createUzer(Uzer uzer) throws BasicApplicationException {
         uzerFacade.create(uzer);

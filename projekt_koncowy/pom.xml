@@ -7,7 +7,7 @@
     <version>0.99-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>ProjektKoncowy_inerceptorRedy</name>
+    <name>ProjektKoncowy</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

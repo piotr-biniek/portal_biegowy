@@ -30,22 +30,29 @@ public class ThemeCreateDeleteInterceptor {
     @AroundInvoke
     public Object interceptorMethodForDAO(InvocationContext invocation) throws Exception {
         String uzerEmail;
-
+        System.out.println("Entering Interceptor----------------------------");
         Object[] parameters = invocation.getParameters();
         Method invokedMethod = invocation.getMethod();
-        uzerEmail = ((Uzer) parameters[0]).getEmail();
-
+        System.out.println(invokedMethod+" Method-----------------------------------");
       
+
         Object result = invocation.proceed();
 
         if (invokedMethod.getName().matches("create*.*")) {
-             themeEndPoint.createThemeForNewUzer(uzerEmail);  
-     
+             uzerEmail = ((Uzer) parameters[0]).getEmail();
+            themeEndPoint.createThemeForNewUzer(uzerEmail);
+           
+            System.out.println("***********Czy znów klincz *************************: "+uzerendpoint.findUzerByEmail(uzerEmail));
+            
+            
         }
         if (invokedMethod.getName().matches("remove.*")) {
+             uzerEmail = ((Uzer) parameters[0]).getEmail();
             themeEndPoint.removeThemeOfDeletedUzer(uzerEmail);
 
         }
+        
+        System.out.println("Exiting interceptor");
 
         return result;
     }
