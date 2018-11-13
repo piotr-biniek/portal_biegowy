@@ -8,17 +8,13 @@ package pl.java.biniek.endpoints;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.faces.context.FacesContext;
 import javax.interceptor.Interceptors;
-import javax.transaction.UserTransaction;
 import pl.java.biniek.endpoints.service.themeinterceptor.ThemeCreateDeleteInterceptor;
 import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.exceptions.NullPointerApplicationException;
@@ -39,15 +35,11 @@ import pl.java.biniek.model.Uzer;
  * @author java pbi moje!!!!!
  */
 @Stateless
+@Interceptors(LoggingInterceptorWithRepackingForEndPoint.class)
 
-@Interceptors({ThemeCreateDeleteInterceptor.class, LoggingInterceptorWithRepackingForEndPoint.class})
-@TransactionManagement(TransactionManagementType.BEAN)
-//@Interceptors()
-//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class UzerEndPoint implements Serializable {
 
-    @Resource
-    private UserTransaction userTransaction;
+ 
     @EJB
     private UzerFacade uzerFacade;
 
@@ -64,26 +56,21 @@ public class UzerEndPoint implements Serializable {
 
     @RolesAllowed("Administrator")
     @Interceptors(ThemeCreateDeleteInterceptor.class)
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void remove(Uzer uzer) throws BasicApplicationException, Exception {//todo porządek z themami
 
         String uzerMail = uzer.getEmail();
 
-        try {
-            userTransaction.begin();
+      
             
             uzerFacade.remove(uzer);
 
-            userTransaction.commit();
-        } catch (Exception ex) {
-            userTransaction.rollback();
-            throw new BasicApplicationException(ex);
-
+     
         }
 
 // obsługa wyjątków w interceptorze
         //    themeEndPoint.removeThemeOfDeletedUzer(uzerMail);
-    }
+    
 
     public List<Uzer> getAllUzers() {
         return uzerFacade.findAll();
@@ -94,21 +81,15 @@ public class UzerEndPoint implements Serializable {
         return uzerFacade.findUzerByEmail(email);
 
     }
-//@Interceptors(ThemeCreateDeleteInterceptor.class)
+@Interceptors(ThemeCreateDeleteInterceptor.class)
 //@TransactionManagement(TransactionManagementType.BEAN) 
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void createUzer(Uzer uzer) throws BasicApplicationException {
 
-    public void createUzer(Uzer uzer) throws BasicApplicationException, Exception {
-
-        try {
-            userTransaction.begin();
+      
             uzerFacade.create(uzer);
 
-            userTransaction.commit();
-        } catch (Exception ex) {
-            userTransaction.rollback();
-            throw new BasicApplicationException(ex);
-
-        }
+      
 
     }
 
@@ -132,7 +113,7 @@ public class UzerEndPoint implements Serializable {
         return organiserFacade.findAll();
 
     }
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Organiser", "Administrator"})
     public void saveAfterEdit(Organiser organiser) throws BasicApplicationException, Exception {
 
@@ -143,21 +124,12 @@ public class UzerEndPoint implements Serializable {
         if (org instanceof Organiser && ((!Objects.equals(organiser.getId(), org.getId())))) {
             throw new WrongUzerApplicationException();
         } else {
-            try {
-                userTransaction.begin();
-
                 uzerFacade.edit(org);
 
-                userTransaction.commit();
-            } catch (Exception ex) {
-                userTransaction.rollback();
-                throw new BasicApplicationException(ex);
-
-            }
-
+          
         }
     }
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Runner", "Administrator"})
     public void saveAfterEdit(Runner runner) throws BasicApplicationException, Exception {
         Uzer run = getLoggedUser();
@@ -170,18 +142,9 @@ public class UzerEndPoint implements Serializable {
             throw new WrongUzerApplicationException();
         } else {
 
-            try {
-                userTransaction.begin();
-
                 runnerFacade.edit(runner);
 
-                userTransaction.commit();
-            } catch (Exception ex) {
-                userTransaction.rollback();
-                throw new BasicApplicationException(ex);
-
-            }
-
+        
         }
 
 // starczy prosta zasada - przed edit dobrze po edit Źle!!!!!!! :)
@@ -194,23 +157,17 @@ public class UzerEndPoint implements Serializable {
         return runnerFacade.findAll();
 
     }
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Runner", "Administrator", "Organiser"})
     public void saveNewPasswordForLogged(String passwd) throws Exception, BasicApplicationException {
         Uzer uzer = this.getLoggedUser();
         uzer.setPassword(passwd);
 
-        try {
-            userTransaction.begin();
-
+      
             uzerFacade.edit(uzer);
 
-            userTransaction.commit();
-        } catch (Exception ex) {
-            userTransaction.rollback();
-            throw new BasicApplicationException(ex);
-
-        }
+          
+        
 
     }
 
@@ -223,23 +180,16 @@ public class UzerEndPoint implements Serializable {
         return adminFacade.findAll();
 
     }
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Administrator"})
     public void createAdministrator(Administrator admin) throws BasicApplicationException, Exception{
 
-        try {
-            userTransaction.begin();
-
+     
             adminFacade.create(admin);
-            userTransaction.commit();
-        } catch (Exception ex) {
-            userTransaction.rollback();
-            throw new BasicApplicationException(ex);
-
+         
         }
-
-    }
-
+    
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Administrator"})
     public void saveAfterEdit(Administrator admin) {
 
