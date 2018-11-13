@@ -19,7 +19,7 @@ import pl.java.biniek.model.Runner;
  * @author samsung
  */
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Interceptors(ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE.class)
 public class RunnerFacade extends AbstractFacade<Runner> {
 

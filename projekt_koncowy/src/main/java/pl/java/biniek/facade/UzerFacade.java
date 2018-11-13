@@ -24,7 +24,7 @@ import pl.java.biniek.model.Uzer;
  * @author samsung
  */
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Interceptors(ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE.class)
 public class UzerFacade extends AbstractFacade<Uzer> {
 
@@ -60,46 +60,3 @@ public class UzerFacade extends AbstractFacade<Uzer> {
     }
     
     
-//    
-//    public boolean doesUniqueEmailExists(String email) {
-//       // SELECT d FROM Uzer d WHERE
-//        
-//         Query q = em.createQuery("SELECT b FROM Uzer b WHERE b.email=?1");
-////String query = "SELECT * FROM Uzer b WHERE b.email='"+email+"'";
-//            q.setParameter(1, email);
-//
-//        return q.getSingleResult()getResultList(...).size() == 1;
-//
-//     
-//rs = stmt.executeQuery(query);
-//ResultSetMetaData metaData = rs.getMetaData();
-//rowcount = metaData.getColumnCount();
-//        
-//        q.setParameter(1, email);
-//   
-//    
-//
-//            try {
-//                 q.getResultList();
-//            } catch ( javax.persistence.NoResultException e) {
-//                
-//           
-//                return null;
-//                
-//            }
-//       
-//        }
-//    }
-//    
-//    
-//    
-////    em.createQuery(
-////    "SELECT COUNT(b.email) FROM Uzer b WHERE b.email=:email"
-////         //   SELECT COUNT(b.email) FROM Buyer b WHERE b.email=:emailparam
-//            
-//          //  SELECT d FROM Uzer d WHERE d.email = :email"
-//);
-//    
-    
-    
-

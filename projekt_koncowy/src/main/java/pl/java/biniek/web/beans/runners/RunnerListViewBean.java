@@ -55,7 +55,7 @@ public class RunnerListViewBean implements Serializable {
         return "runnerDetails";
     }
 
-    public String delete(Runner runner) throws BasicApplicationException {
+    public String delete(Runner runner) throws Exception {
 
         return uzerControler.deleteRunner(runner);
 

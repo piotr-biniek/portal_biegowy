@@ -31,7 +31,7 @@ public class OrganiserListViewBean implements Serializable {
         return "organiserDetails";
     }
 
-    public String delete(Organiser organiser) throws BasicApplicationException {
+    public String delete(Organiser organiser) throws Exception {
 
         return uzerControler.delete(organiser);
 

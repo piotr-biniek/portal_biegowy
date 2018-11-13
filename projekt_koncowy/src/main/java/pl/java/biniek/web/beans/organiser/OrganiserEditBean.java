@@ -33,7 +33,7 @@ public class OrganiserEditBean implements Serializable {
         return uzerControler;
     }
 
-    public String save() throws BasicApplicationException {
+    public String save() throws Exception {
         return uzerControler.saveEditedOrganiser(org);
 
     }

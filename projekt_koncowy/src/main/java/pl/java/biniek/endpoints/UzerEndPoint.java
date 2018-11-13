@@ -8,13 +8,17 @@ package pl.java.biniek.endpoints;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.faces.context.FacesContext;
 import javax.interceptor.Interceptors;
+import javax.transaction.UserTransaction;
 import pl.java.biniek.endpoints.service.themeinterceptor.ThemeCreateDeleteInterceptor;
 import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.exceptions.NullPointerApplicationException;
@@ -36,11 +40,14 @@ import pl.java.biniek.model.Uzer;
  */
 @Stateless
 
-@Interceptors({ThemeCreateDeleteInterceptor.class,LoggingInterceptorWithRepackingForEndPoint.class})
+@Interceptors({ThemeCreateDeleteInterceptor.class, LoggingInterceptorWithRepackingForEndPoint.class})
+@TransactionManagement(TransactionManagementType.BEAN)
 //@Interceptors()
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class UzerEndPoint implements Serializable {
 
+    @Resource
+    private UserTransaction userTransaction;
     @EJB
     private UzerFacade uzerFacade;
 
@@ -51,18 +58,31 @@ public class UzerEndPoint implements Serializable {
     private RunnerFacade runnerFacade;
 
     @EJB
-   private AdministratorFacade adminFacade;
+    private AdministratorFacade adminFacade;
     @EJB
     private ThemeEndPoint themeEndPoint;
-    
+
     @RolesAllowed("Administrator")
     @Interceptors(ThemeCreateDeleteInterceptor.class)
-    public void remove(Uzer uzer) throws BasicApplicationException {//todo porządek z themami
-            String uzerMail = uzer.getEmail();
-            uzerFacade.remove(uzer);
-        //    themeEndPoint.removeThemeOfDeletedUzer(uzerMail);
-    
 
+    public void remove(Uzer uzer) throws BasicApplicationException, Exception {//todo porządek z themami
+
+        String uzerMail = uzer.getEmail();
+
+        try {
+            userTransaction.begin();
+            
+            uzerFacade.remove(uzer);
+
+            userTransaction.commit();
+        } catch (Exception ex) {
+            userTransaction.rollback();
+            throw new BasicApplicationException(ex);
+
+        }
+
+// obsługa wyjątków w interceptorze
+        //    themeEndPoint.removeThemeOfDeletedUzer(uzerMail);
     }
 
     public List<Uzer> getAllUzers() {
@@ -76,37 +96,45 @@ public class UzerEndPoint implements Serializable {
     }
 //@Interceptors(ThemeCreateDeleteInterceptor.class)
 //@TransactionManagement(TransactionManagementType.BEAN) 
-    public void createUzer(Uzer uzer) throws BasicApplicationException {
-        uzerFacade.create(uzer);
-//        themeEndPoint.createThemeForNewUzer(uzer);
-        
-    }
-    
-    public Uzer getLoggedUser() {
-        //    String email = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-        Uzer uzer = findUzerByEmail(this.getLoggedUserEmail());
-        if (null != uzer) {
-            return uzer;
-        } else {
-            return null;
+
+    public void createUzer(Uzer uzer) throws BasicApplicationException, Exception {
+
+        try {
+            userTransaction.begin();
+            uzerFacade.create(uzer);
+
+            userTransaction.commit();
+        } catch (Exception ex) {
+            userTransaction.rollback();
+            throw new BasicApplicationException(ex);
+
         }
 
+    }
+
+    public Uzer getLoggedUser() {
+            String email = this.getLoggedUserEmail();
+        if (email==null)return null;
+        else return this.findUzerByEmail(email);
+     
     }
 
     public String getLoggedUserEmail() {
         return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
     }
-     public List<Administrator> getAllAdmins() {
+
+    public List<Administrator> getAllAdmins() {
         return adminFacade.findAll();
 
     }
+
     public List<Organiser> getAllOrganisers() {
         return organiserFacade.findAll();
 
     }
 
     @RolesAllowed({"Organiser", "Administrator"})
-    public void saveAfterEdit(Organiser organiser) throws BasicApplicationException {
+    public void saveAfterEdit(Organiser organiser) throws BasicApplicationException, Exception {
 
         Uzer org = getLoggedUser();
         if (organiser == null) {
@@ -115,23 +143,44 @@ public class UzerEndPoint implements Serializable {
         if (org instanceof Organiser && ((!Objects.equals(organiser.getId(), org.getId())))) {
             throw new WrongUzerApplicationException();
         } else {
-            organiserFacade.edit(organiser);
+            try {
+                userTransaction.begin();
+
+                uzerFacade.edit(org);
+
+                userTransaction.commit();
+            } catch (Exception ex) {
+                userTransaction.rollback();
+                throw new BasicApplicationException(ex);
+
+            }
 
         }
     }
 
     @RolesAllowed({"Runner", "Administrator"})
-    public void saveAfterEdit(Runner runner) throws BasicApplicationException {
+    public void saveAfterEdit(Runner runner) throws BasicApplicationException, Exception {
         Uzer run = getLoggedUser();
-        
+
         if (runner == null) {
             throw new NullPointerApplicationException();
         }
         if (run instanceof Runner && (!Objects.equals(runner.getId(), run.getId()))) {
-           
+
             throw new WrongUzerApplicationException();
         } else {
-            runnerFacade.edit(runner);
+
+            try {
+                userTransaction.begin();
+
+                runnerFacade.edit(runner);
+
+                userTransaction.commit();
+            } catch (Exception ex) {
+                userTransaction.rollback();
+                throw new BasicApplicationException(ex);
+
+            }
 
         }
 
@@ -147,35 +196,54 @@ public class UzerEndPoint implements Serializable {
     }
 
     @RolesAllowed({"Runner", "Administrator", "Organiser"})
-    public void saveNewPasswordForLogged(String passwd) {
+    public void saveNewPasswordForLogged(String passwd) throws Exception, BasicApplicationException {
         Uzer uzer = this.getLoggedUser();
         uzer.setPassword(passwd);
-        uzerFacade.edit(uzer);
+
+        try {
+            userTransaction.begin();
+
+            uzerFacade.edit(uzer);
+
+            userTransaction.commit();
+        } catch (Exception ex) {
+            userTransaction.rollback();
+            throw new BasicApplicationException(ex);
+
+        }
+
     }
-   
-    public boolean  checkEmailExistsInDB(String email){
+
+    public boolean checkEmailExistsInDB(String email) {
         return uzerFacade.checkIfEmailExists(email);
     }
 
-@RolesAllowed({"Administrator"})   
-public List<Administrator> getAllAdministrators(){
-   return adminFacade.findAll();
-       
-}
-@RolesAllowed({"Administrator"})   
-public void createAdministrator(Administrator admin) throws BasicApplicationException{
-  
-    adminFacade.create(admin);
-  }
-@RolesAllowed({"Administrator"})   
-public void saveAfterEdit(Administrator admin){
-   
+    @RolesAllowed({"Administrator"})
+    public List<Administrator> getAllAdministrators() {
+        return adminFacade.findAll();
+
+    }
+
+    @RolesAllowed({"Administrator"})
+    public void createAdministrator(Administrator admin) throws BasicApplicationException, Exception{
+
+        try {
+            userTransaction.begin();
+
+            adminFacade.create(admin);
+            userTransaction.commit();
+        } catch (Exception ex) {
+            userTransaction.rollback();
+            throw new BasicApplicationException(ex);
+
+        }
+
+    }
+
+    @RolesAllowed({"Administrator"})
+    public void saveAfterEdit(Administrator admin) {
+
         adminFacade.edit(admin);
-       
 
-
-
-// starczy prosta zasada - przed edit dobrze po edit Źle!!!!!!! :)
-
-}
+    }
 }

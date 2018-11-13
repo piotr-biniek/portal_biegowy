@@ -68,10 +68,8 @@ public class PasswordPageBean implements Serializable {
 
     }
 
-    public String saveNewPassword() throws BasicApplicationException {   //
-//           zmiana hasla wyjatek jak nie zalogowany
-//saveNewPassword() throws BasicApplicationException {   //  przeniesc do góry 
-//przeniesc do góry i exception
+    public String saveNewPassword() throws Exception {   //
+
         Uzer uzer = this.getLoggdUzer();
         String haslo;
         haslo = uzer.getPassword();
@@ -85,34 +83,6 @@ public class PasswordPageBean implements Serializable {
 
     }
 
-    @Deprecated
-    public String saveEditedPassword1() throws BasicApplicationException {   //  przeniesc do góry pewnie do  
-//           zmiana hasla wyjatek jak nie zalogowany
-//saveNewPassword() throws BasicApplicationException {   //  przeniesc do góry pewnie do endpointa     
-//przeniesc do góry i exception
-        Uzer uzer = this.getLoggdUzer();
-        String haslo;
-        haslo = uzer.getPassword();
 
-        if (!haslo.equals(appControler.hashPassword(getOldPassword()))) {//
-            AplicationController.showGeneralMessage(FacesMessage.SEVERITY_WARN, "messages.badpassword");
-            // FacesMessage msg = new FacesMessage("bad pass@@@@@@@@@@@@", "incorect pass!!!!!!!!!!!!");
-            // FacesContext.getCurrentInstance().addMessage("złe hasło!!!!!!", msg);
-            return null;///
-        } //throw new BasicApplicationException("incorrect password");
-        else {
-            uzer.setPassword(appControler.hashPassword(newPassword));
-        }
-        if (uzer instanceof Runner) {
-            uzerControler.saveAfterEdit((Runner) uzer);
-        } else if (uzer instanceof Organiser) {
-            uzerControler.saveAfterEdit((Organiser) uzer);
-        }
-
-        //      message
-        //   return "index";
-        //      uzerControler.sa
-        return "index";
-    }
 
 }

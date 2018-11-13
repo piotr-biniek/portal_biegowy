@@ -1,16 +1,22 @@
 ppomysleć nad czy cos z tym robić specjalnego czy przepak jak teraz
- javax.ejb.EJBAccessException - wyjątki ze złej akcji inny zalogowany
+javax.ejb.EJBAccessException - wyjątki ze złej akcji inny zalogowany
 javax.ejb.AccessLocalException
 
 
 
+runAs przy zapisie
 
-//runAs przy zapisie
+
+Edycja admina?
 
 
-Edycja admia?
+potwirdzanie maila tokenem !!
 
-logi do plików
+poprawa zapytan na count
+
+poprawa biznesmethod, hashcode i equals zgodnie z java-core
+
+educja admina przez samego siebie
 
 
 

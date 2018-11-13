@@ -80,7 +80,7 @@ public class RunnerDetailsBean implements Serializable {
         return "listOfRunners";
     }
 
-    public String deleteVievedRunner() throws BasicApplicationException {
+    public String deleteVievedRunner() throws Exception {
 
         return uzerControler.deleteViewedRunner(runner);
        

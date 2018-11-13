@@ -15,7 +15,7 @@ import pl.java.biniek.exceptions.BasicApplicationException;
  *
  * @author samsung
  */
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+
 public abstract class AbstractFacade<T> {
 
     private Class<T> entityClass;
@@ -26,17 +26,20 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void create(T entity) throws BasicApplicationException {
         getEntityManager().persist(entity);
          getEntityManager().flush();
         
     }
 
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void edit(T entity) {
         getEntityManager().merge(entity);
          getEntityManager().flush();
     }
 
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void remove(T entity)  {
         getEntityManager().remove(getEntityManager().merge(entity));
         getEntityManager().flush();

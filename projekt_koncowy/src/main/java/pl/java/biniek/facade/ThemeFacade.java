@@ -22,7 +22,7 @@ import pl.java.biniek.model.Uzer;
  */
 @Stateless
 @Interceptors(ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE.class)
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ThemeFacade extends AbstractFacade<UzerTheme> {
 
     @PersistenceContext(unitName = "com.mycompany_aProjektKoncowy02_war_1.0-SNAPSHOTPU")
@@ -50,7 +50,7 @@ public class ThemeFacade extends AbstractFacade<UzerTheme> {
         return (UzerTheme) tq.getSingleResult();
 
     }
-
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void removeThemeByUserMail(String uzerMail) {// todo zrobić porządek z themami - przeniesc tworzenie do 1go logowania
         UzerTheme ut = findThemeBymail(uzerMail);
         remove(ut);

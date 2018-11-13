@@ -19,7 +19,7 @@ import pl.java.biniek.model.Administrator;
  * @author samsung
  */
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+
 @Interceptors(ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE.class)
 public class AdministratorFacade extends AbstractFacade<Administrator> {
 

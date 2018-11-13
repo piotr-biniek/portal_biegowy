@@ -31,7 +31,7 @@ import pl.java.biniek.model.Runner;
  */
 @Stateless
 @Singleton
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Interceptors(ExceptionAndLoggingInterceptorWithRepackingExceptionsForFACADE.class)
 public class PaymentFacade extends AbstractFacade<Payment> {
 
@@ -52,6 +52,7 @@ public class PaymentFacade extends AbstractFacade<Payment> {
 
 //synchronized
     @Override
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public synchronized void create(Payment entity) throws BasicApplicationException {
         Course course=courseFacade.reload(entity.getCourse().getId());
 

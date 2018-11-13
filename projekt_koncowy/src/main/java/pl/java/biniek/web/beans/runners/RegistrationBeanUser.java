@@ -32,7 +32,7 @@ public class RegistrationBeanUser implements Serializable {
         this.runner = runner;
     }
 
-    public String save() throws BasicApplicationException {
+    public String save() throws Exception {
         String passwordHash = AplicationController.hashPassword(runner.getPassword());
         runner.setPassword(passwordHash);
         //  return 

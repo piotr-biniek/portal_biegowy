@@ -43,7 +43,7 @@ UzerController uzrController;
      
     
 
-       public String save() throws BasicApplicationException {        
+       public String save() throws Exception {        
        return  uzrController.saveNew(admin);
         
     }

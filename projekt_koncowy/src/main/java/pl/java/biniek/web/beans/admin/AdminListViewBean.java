@@ -8,6 +8,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import pl.java.biniek.exception.interceptor.frontend.BinderPageBean;
+import pl.java.biniek.exception.interceptor.frontend.BinderStringToNull;
 import pl.java.biniek.model.Administrator;
 
 @Named
@@ -25,6 +26,7 @@ public class AdminListViewBean implements Serializable {
   
        
    //w zasadzie dostęp do listy organizatorów to może mieć każdy
+    @BinderStringToNull
     public List<Administrator> getAllAdministrator(){
         return uzerControler.getAllAdmins();
     }
