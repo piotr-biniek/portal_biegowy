@@ -14,7 +14,6 @@ import javax.interceptor.Interceptors;
 import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.exception.interceptor.backend.LoggingInterceptorWithRepackingForEndPoint;
 import pl.java.biniek.facade.ThemeFacade;
-import pl.java.biniek.model.Uzer;
 import pl.java.biniek.uzertheme.UzerTheme;
 //import pl.java.biniek.model.Uzer;
 
@@ -32,28 +31,28 @@ public class ThemeEndPoint implements Serializable {
     @EJB
     private UzerEndPoint uzerEndPoint;
 
-    public String findThemeOfLoggedUzer() {
 
-        return themeFacade.findThemeByUser(uzerEndPoint.getLoggedUser()).getThemeType();
-
-    }
-
-    public void createThemeForNewUzer(String uzerEmail) throws BasicApplicationException {
+    public void createThemeForNewUzer(long usrId) throws BasicApplicationException {
         UzerTheme theme = new UzerTheme();
         theme.setThemeType("sunny");
-        theme.setUzerEmail(uzerEmail);
+        theme.setUzerId(usrId);
         themeFacade.create(theme);
     }
 
+//    public String findThemeOfLoggedUzer() {
+//
+//        return themeFacade.findThemeByUzerId((uzerEndPoint.getLoggedUser()).getId()).getThemeType();
+//
+//    }
     public String getLoggedUserTheme() {
 
-        return themeFacade.findThemeByUser(uzerEndPoint.getLoggedUser()).getThemeType();
+        return themeFacade.findThemeByUzerId(uzerEndPoint.getLoggedUser().getId()).getThemeType();
 
     }
 
     public void setLoggedUserTheme(String newThemeValue) {
         if (uzerEndPoint.getLoggedUser() != null) {
-            UzerTheme theme = themeFacade.findThemeByUser(uzerEndPoint.getLoggedUser());
+            UzerTheme theme = themeFacade.findThemeByUzerId(uzerEndPoint.getLoggedUser().getId());
             theme.setThemeType(newThemeValue);
             themeFacade.edit(theme);
         }
@@ -61,7 +60,7 @@ public class ThemeEndPoint implements Serializable {
     }
 
     
-    public void removeThemeOfDeletedUzer(String uzerMail) {
-        themeFacade.removeThemeByUserMail(uzerMail);
+    public void removeThemeOfDeletedUzer(long uzerId) {
+        themeFacade.removeThemeByUserId(uzerId);
     }
 }

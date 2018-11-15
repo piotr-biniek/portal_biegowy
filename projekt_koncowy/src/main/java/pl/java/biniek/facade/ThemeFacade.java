@@ -37,22 +37,22 @@ public class ThemeFacade extends AbstractFacade<UzerTheme> {
         super(UzerTheme.class);
     }
 
-    public UzerTheme findThemeByUser(Uzer user) {
+//    public UzerTheme findThemeByUser(Uzer user) {
+//
+//        return findThemeBymail(user.getEmail());
+//    }
 
-        return findThemeBymail(user.getEmail());
-    }
+    public UzerTheme findThemeByUzerId(long uzerId) {
 
-    public UzerTheme findThemeBymail(String email) {
-
-        Query tq = em.createQuery("SELECT d FROM UzerTheme d WHERE d.uzerEmail = ?1 ", UzerTheme.class);
-        tq.setParameter(1, email);
+        Query tq = em.createQuery("SELECT d FROM UzerTheme d WHERE d.uzerId = ?1 ", UzerTheme.class);
+        tq.setParameter(1, uzerId);
 
         return (UzerTheme) tq.getSingleResult();
 
     }
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
-    public void removeThemeByUserMail(String uzerMail) {// todo zrobić porządek z themami - przeniesc tworzenie do 1go logowania
-        UzerTheme ut = findThemeBymail(uzerMail);
+    public void removeThemeByUserId(long uzerId) {// todo zrobić porządek z themami - przeniesc tworzenie do 1go logowania
+        UzerTheme ut = findThemeByUzerId(uzerId);
         remove(ut);
     }
 
