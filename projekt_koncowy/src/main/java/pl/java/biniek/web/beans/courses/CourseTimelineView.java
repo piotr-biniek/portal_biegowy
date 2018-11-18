@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.inject.Inject;
@@ -59,7 +58,7 @@ public class CourseTimelineView implements Serializable {
 
         courses = courseControler.getAllCourses();
         for (Course course : courses) {
-            model.add(new TimelineEvent(course.getShortName(), course.getDateOfStart()));
+            model.add(new TimelineEvent(course.getShortName(), java.sql.Timestamp.valueOf(course.getDateOfStart())));
 
         }
     }

@@ -18,8 +18,21 @@ poprawa biznesmethod, hashcode i equals zgodnie z java-core
 
 educja admina przez samego siebie
 
+przebudowa getbuisneskey!!
+
+Course.toMail() - zmiana miejsca itp
 
 
+cała metoda z Biegacza pomysleć i poszukac
+  /**
+     * Set the value of dateOfBirth, from java.util.Date - nesesery for PrimeFaces, to solve
+     *
+     * @param dateOfBirth new value of dateOfBirth
+     */
+    public void setDateOfBirth(Date dateOfBirth) {
+        
+         this.setDateOfBirth(dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+    }
 
 
 

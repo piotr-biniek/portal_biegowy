@@ -19,6 +19,8 @@ package pl.java.biniek.web.beans.courses;
 import pl.java.biniek.web.beans.controlers.CourseController;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -93,8 +95,8 @@ public class CourseDetailsBean implements Serializable {
 
     }
      public boolean isVievedCourseAfterCurrentDate() {
-        Date currentDate = new Date();
-        return getViewedCourse().getDateOfStart().before(currentDate);
+        LocalDateTime now = LocalDateTime.now();//new Date();
+        return getViewedCourse().getDateOfStart().compareTo(now)<0;
     }
 
 
