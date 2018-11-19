@@ -6,7 +6,7 @@
 package pl.java.biniek.endpoints;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.persistence.TypedQuery;
 import pl.java.biniek.exceptions.AftertTimeException;
 import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.facade.PaymentFacade;
@@ -36,8 +37,8 @@ public class PaymentEndPoint implements Serializable {
 
     @RolesAllowed({"Runner"})
     public void remove(Payment payment) throws BasicApplicationException {
-        LocalDateTime now =LocalDateTime.now();// new Date();
-        if (payment.getCourse().getDateOfStart().compareTo(now)<0) {
+        Date now = new Date();
+        if (payment.getCourse().getDateOfStart().after(now)) {
             paymentFacade.remove(payment);
         } else {
             throw new AftertTimeException();
@@ -47,8 +48,8 @@ public class PaymentEndPoint implements Serializable {
 
     @RolesAllowed({"Runner"})
     public void createPayment(Payment payment) throws BasicApplicationException {
-        LocalDateTime now =LocalDateTime.now();//new Date();
-        if (payment.getCourse().getDateOfStart().compareTo(now)<0) {
+        Date now = new Date();
+        if (payment.getCourse().getDateOfStart().after(now)) {
             paymentFacade.create(payment);
         } else {
             throw new AftertTimeException();
@@ -57,8 +58,8 @@ public class PaymentEndPoint implements Serializable {
 
     @RolesAllowed({"Runner"})
     public void saveAfterEdit(Payment payment) throws BasicApplicationException {
-        LocalDateTime now =LocalDateTime.now();;//new Date();
-        if (payment.getCourse().getDateOfStart().compareTo(now)<0) {
+        Date now = new Date();
+        if (payment.getCourse().getDateOfStart().after(now)) {
             paymentFacade.edit(payment);
         } else {
             throw new AftertTimeException();

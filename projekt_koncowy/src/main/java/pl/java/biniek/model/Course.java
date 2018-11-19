@@ -6,10 +6,9 @@
 package pl.java.biniek.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 //import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -65,9 +65,9 @@ public class Course extends AbstractEntity implements Serializable {//model!!
     private float distance;
 
     @NotNull
-    @Column(name = "dateOfStart",  nullable = false)
-   // @Temporal(javax.persistence.TemporalType.TIMESTAMP)// nie jest wymagane w LDT
-    private LocalDateTime dateOfStart;
+    @Column(name = "dateOfStart", unique = false, nullable = false)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dateOfStart;
 
     @JoinColumn(name = "ID_ORGANISER", referencedColumnName = "ID")//nullable = false
     @ManyToOne
@@ -308,7 +308,7 @@ public class Course extends AbstractEntity implements Serializable {//model!!
      *
      * @return the value of dateOfStart
      */
-    public LocalDateTime getDateOfStart() {
+    public Date getDateOfStart() {
         return dateOfStart;
     }
 
@@ -317,7 +317,7 @@ public class Course extends AbstractEntity implements Serializable {//model!!
      *
      * @param dateOfStart new value of dateOfStart
      */
-    public void setDateOfStart(LocalDateTime dateOfStart) {
+    public void setDateOfStart(Date dateOfStart) {
         this.dateOfStart = dateOfStart;
     }
 
@@ -352,7 +352,38 @@ public class Course extends AbstractEntity implements Serializable {//model!!
         this.runnersLimit = runnersLimit;
     }
 
-   
+    ;
+
+    /**
+     * Get the value of Runners
+     *
+     * @return the value of Runners
+     */
+ //@@X   public Set getRunners() {
+ //@@X       return runners;
+  //@@X  }
+
+    /**
+     * Adds the runner to the course
+     *
+     */
+  //@@X  public void addRunner(Runner runner) throws Exception {
+   //@@X     if (runnersLimit <= runners.size()) {
+    //@@X        throw new Exception();
+    //@@X    } else {
+   //@@X         runners.add(runner);
+     //@@X   }
+
+   //@@X }
+
+    /**
+     * Removes the runner from the course
+     *
+     */
+  //@@X  public void removeRunner(Runner runner) {
+    //@@X    runners.remove(runner);
+  //@@X  }
+
     /**
      * Get the value of distance
      *
@@ -406,23 +437,21 @@ public class Course extends AbstractEntity implements Serializable {//model!!
     public void setName(String name) {
         this.name = name;
     }
-   /**
-     * old method taken from studies - should be rebuilded
-     *
-     * return value 
-     */
+
     @Override
-    protected String getBusinessKey() {//todo
+    protected String getBusinessKey() {
         
         return "id :"+String.valueOf(id)+", name :"+name;
         
     }
 
-   /**
-     * Generates informacion for mailing confirmation 
-     *
-     */
-     public String toMail() {
+//    @Override
+//    public String toString() {
+//        return "Course{" + "id=" + id + ", name=" + name + ", shortName=" + shortName + ", cityOfCours=" + cityOfCours + ", distance=" + distance + ", dateOfStart=" + dateOfStart + ", descent=" + descent + ", climb=" + climb + ", cityOfRunOffice=" + cityOfRunOffice + ", addressOfRunOffice=" + addressOfRunOffice + ", info=" + info + ", email=" + email + ", phone=" + phone + ", runnersLimit=" + runnersLimit + '}';
+//    }
+
+   
+    public String toMail() {
         return "Course{ name=" + name + ", shortName=" + shortName + ", cityOfCours=" + cityOfCours + ", distance=" + distance + ", dateOfStart=" + dateOfStart 
                 + ", organiserOfTheCourse=" + organiserOfTheCourse + ", descent=" + descent + ", climb=" + climb + ", cityOfRunOffice=" + cityOfRunOffice 
                 + ", addressOfRunOffice=" + addressOfRunOffice + ", info=" + info + ", email=" + email + ", phone=" + phone + ", runnersLimit=" 

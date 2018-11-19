@@ -31,8 +31,8 @@ public class RegistrationBeanUser implements Serializable {
     public void setRunner(Runner runner) {
         this.runner = runner;
     }
-    
-       public String save() throws Exception {
+
+    public String save() throws Exception {
         String passwordHash = AplicationController.hashPassword(runner.getPassword());
         runner.setPassword(passwordHash);
         //  return 
