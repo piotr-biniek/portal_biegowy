@@ -1,24 +1,10 @@
-//ok podniesiono
-/**
- * Autor Piotr ku pamięci Klasa CoursesPageViewBean  - klasa testowa  mozliwe rózne rozwiązania
- *  rozwiązanie odwołania się z xhtml do Kolekcji
- * albo poprzez nazwę klasy beana (jezeli nie damy mu nazwy @ManagedBean) czyli np poporzez
- * #{coursesPageViewBean.*}
- * jeżeli ma nazwę @ManagedBean(name = "listOfCourses")
- * #{listOfCourses.*}
- *
- * Tworzenie kolekcji rozwiązano na 2 sposoby
- * albo poprzez pobranie Kolekcji z endponta metodą Init opisaną   @PostConstruct,
- * #{*.coursesList}
- * albo wywołanie metody getAllCourses() która z wstrzyknietego endpointa zwraca kolekcje
- * #{*.allCourses}
- *
- */
+
 package pl.java.biniek.web.beans.courses;
 
 import pl.java.biniek.web.beans.controlers.CourseController;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -93,8 +79,8 @@ public class CourseDetailsBean implements Serializable {
 
     }
      public boolean isVievedCourseAfterCurrentDate() {
-        Date currentDate = new Date();
-        return getViewedCourse().getDateOfStart().before(currentDate);
+        LocalDateTime now = LocalDateTime.now();//new Date();
+        return getViewedCourse().getDateOfStart().compareTo(now)<0;
     }
 
 

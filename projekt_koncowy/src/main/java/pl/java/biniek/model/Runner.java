@@ -7,8 +7,8 @@ package pl.java.biniek.model;
 
 //import java.time.LocalDate;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.Pattern;
 
 /**
@@ -37,21 +37,21 @@ public class Runner extends Uzer implements Serializable {
     public Runner() {
     }
 
-//    @NotNull
+    @NotNull
     @Column(name = "firstName", unique = false, nullable = false, length = 256)
     private String firstName;
 
-    //  @NotNull
+    @NotNull
     @Column(name = "lastName", unique = false, nullable = false, length = 256)
     private String lastName;
 
-    //uzupelnic java doc, testy, 
-    //@NotNull
+    //todo uzupelnic java doc, testy, 
+    @NotNull
     @Column(name = "dateOfBirth", unique = false, nullable = false, length = 256)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateOfBirth;
+   // @Temporal(javax.persistence.TemporalType.DATE)
+    private LocalDate dateOfBirth;
 
-    //    @NotNull
+    @NotNull
     @Column(name = "isMale", unique = false, nullable = false)
     private boolean isMale;
 
@@ -128,31 +128,13 @@ public class Runner extends Uzer implements Serializable {
         this.isMale = isMale;
     }
 
-    /**
-     * Get the value of coursesOfRunner
-     *
-     * @return the value of coursesOfRunner
-     */
-    //@@X   public Set getCoursesOfRunner() {
-//@@X        return coursesOfRunner;
-//@@X    }
-    /**
-     * Adds new Course for runner if it is not already present
-     *
-     * @param course
-     * @return <tt>true</tt> if this set did not already contain the specified
-     * element
-     */
-//@@X    public boolean addCourse(Course course) throws Exception {
-//        course.addRunner(this);
-//@@X        return coursesOfRunner.add(course);
-//@@X    }
+   
     /**
      * Get the value of dateOfBirth
      *
      * @return the value of dateOfBirth
      */
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -161,10 +143,10 @@ public class Runner extends Uzer implements Serializable {
      *
      * @param dateOfBirth new value of dateOfBirth
      */
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
+    
     /**
      * Get the value of Surname
      *
