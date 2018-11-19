@@ -48,7 +48,6 @@ public class Runner extends Uzer implements Serializable {
     //todo uzupelnic java doc, testy, 
     @NotNull
     @Column(name = "dateOfBirth", unique = false, nullable = false, length = 256)
-   // @Temporal(javax.persistence.TemporalType.DATE)
     private LocalDate dateOfBirth;
 
     @NotNull
