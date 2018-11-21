@@ -60,7 +60,7 @@ public class OrganiserWizard implements Serializable {
         }
     }
 
-    public String save() throws Exception {
+    public String save() throws BasicApplicationException {
         return uzerController.saveNew(organiser);
 
     }

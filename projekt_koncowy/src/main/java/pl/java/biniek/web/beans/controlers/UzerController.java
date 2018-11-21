@@ -88,14 +88,14 @@ public class UzerController implements Serializable {
 //        }
     }
 
-    public String saveNew(Uzer uzer) throws Exception {
+    public String saveNew(Uzer uzer) throws BasicApplicationException {
         uzerEndPoint.createUzer(uzer);
         AplicationController.showInfoSuccesMessage(null);
         return "registerUser-return";
 
     }
 
-    public String saveNew(Administrator admin) throws Exception {
+    public String saveNew(Administrator admin) throws BasicApplicationException {
 
         uzerEndPoint.createAdministrator(admin);// 
         AplicationController.showInfoSuccesMessage("");
@@ -103,7 +103,7 @@ public class UzerController implements Serializable {
 
     }
 
-    public String saveEditedOrganiser(Organiser org) throws Exception {
+    public String saveEditedOrganiser(Organiser org) throws BasicApplicationException {
 
         this.saveAfterEdit(org);
         AplicationController.showInfoSuccesMessage(null);
@@ -113,12 +113,12 @@ public class UzerController implements Serializable {
         return "organiserDetails";
     }
 
-    public void saveAfterEdit(Organiser org) throws Exception {
+    public void saveAfterEdit(Organiser org) throws BasicApplicationException {
 
         uzerEndPoint.saveAfterEdit(org);
     }
 
-    public String saveEditedRunner(Runner run) throws Exception {
+    public String saveEditedRunner(Runner run) throws BasicApplicationException {
         //    Runner run = editetRunner;
 
         //  this.setEditetRunner(null);//domosc faces
@@ -131,11 +131,11 @@ public class UzerController implements Serializable {
 
     }
 
-    public void saveAfterEdit(Runner runer) throws Exception {
+    public void saveAfterEdit(Runner runer) throws BasicApplicationException {
         uzerEndPoint.saveAfterEdit(runer);
     }
 
-    public String delete(Organiser organiserForDelete) throws Exception {
+    public String delete(Organiser organiserForDelete) throws BasicApplicationException {
         this.removeUzer(organiserForDelete);
         return "listOfOrganisers";
 
@@ -179,18 +179,18 @@ public class UzerController implements Serializable {
     ///////////////////////////////////////////////////////////////////
     ///////// przeuniete z pagebeanow
     ///////////////////////////////////////////////////////////////////
-    public String saveNew(Runner runner) throws Exception {
+    public String saveNew(Runner runner) throws BasicApplicationException {
         uzerEndPoint.createUzer(runner);
         AplicationController.showInfoSuccesMessage("");
         return "registerUser-return";
 
     }
 
-    public void removeUzer(Uzer uzer) throws Exception {
+    public void removeUzer(Uzer uzer) throws BasicApplicationException {
         uzerEndPoint.remove(uzer);
     }
 
-    public String deleteRunner(Runner runnerForDelete) throws Exception {
+    public String deleteRunner(Runner runnerForDelete) throws BasicApplicationException {
         this.removeUzer(runnerForDelete);
         return "listOfRunners";
     }
@@ -212,7 +212,7 @@ public class UzerController implements Serializable {
         }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 
-    public String deleteViewedOrganiser(Organiser org) throws Exception {
+    public String deleteViewedOrganiser(Organiser org) throws BasicApplicationException {
         this.removeUzer(org);
         this.setViewedOrganiser(null);
         AplicationController.showInfoSuccesMessage(null);
@@ -221,7 +221,7 @@ public class UzerController implements Serializable {
         return "listOfOrganisers";
     }
 
-    public String deleteViewedRunner(Runner runer) throws Exception {
+    public String deleteViewedRunner(Runner runer) throws BasicApplicationException {
         //Runner run = viewedRunner;
         this.removeUzer(runer);
         this.setViewedRunner(null);
@@ -269,7 +269,7 @@ public class UzerController implements Serializable {
         }
     }
 
-    public String saveNewPasswordForLoggedUzer(String passwd) throws Exception{
+    public String saveNewPasswordForLoggedUzer(String passwd) throws BasicApplicationException{
         uzerEndPoint.saveNewPasswordForLogged(passwd); //To change body of generated methods, choose Tools | Templates.
         AplicationController.showInfoSuccesMessage(null);
         return "index";

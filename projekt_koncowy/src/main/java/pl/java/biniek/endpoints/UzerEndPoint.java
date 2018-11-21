@@ -57,7 +57,7 @@ public class UzerEndPoint implements Serializable {
     @RolesAllowed("Administrator")
     @Interceptors(ThemeCreateDeleteInterceptor.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void remove(Uzer uzer) throws BasicApplicationException, Exception {//todo porządek z themami
+    public void remove(Uzer uzer) throws BasicApplicationException {//todo porządek z themami
 
         String uzerMail = uzer.getEmail();
 
@@ -115,7 +115,7 @@ public class UzerEndPoint implements Serializable {
     }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Organiser", "Administrator"})
-    public void saveAfterEdit(Organiser organiser) throws BasicApplicationException, Exception {
+    public void saveAfterEdit(Organiser organiser) throws BasicApplicationException {
 
         Uzer org = getLoggedUser();
         if (organiser == null) {
@@ -131,7 +131,7 @@ public class UzerEndPoint implements Serializable {
     }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Runner", "Administrator"})
-    public void saveAfterEdit(Runner runner) throws BasicApplicationException, Exception {
+    public void saveAfterEdit(Runner runner) throws BasicApplicationException {
         Uzer run = getLoggedUser();
 
         if (runner == null) {
@@ -159,7 +159,7 @@ public class UzerEndPoint implements Serializable {
     }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Runner", "Administrator", "Organiser"})
-    public void saveNewPasswordForLogged(String passwd) throws Exception, BasicApplicationException {
+    public void saveNewPasswordForLogged(String passwd) throws  BasicApplicationException {
         Uzer uzer = this.getLoggedUser();
         uzer.setPassword(passwd);
 
@@ -182,7 +182,7 @@ public class UzerEndPoint implements Serializable {
     }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @RolesAllowed({"Administrator"})
-    public void createAdministrator(Administrator admin) throws BasicApplicationException, Exception{
+    public void createAdministrator(Administrator admin) throws BasicApplicationException{
 
      
             adminFacade.create(admin);

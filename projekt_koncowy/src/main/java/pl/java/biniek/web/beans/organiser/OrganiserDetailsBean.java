@@ -64,7 +64,7 @@ public class OrganiserDetailsBean implements Serializable {
         return "listOfOrganisers";
     }
 
-    public String deleteViewedOrganizer() throws Exception {
+    public String deleteViewedOrganizer() throws BasicApplicationException {
 
         return uzerControler.deleteViewedOrganiser(org);
 

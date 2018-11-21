@@ -231,7 +231,7 @@ public class CourseController implements Serializable {
 
     }
 
-    public String deleteViewedCourse11a() throws Exception {
+    public String deleteViewedCourse11a() throws BasicApplicationException {
 
         deleteCourse(this.getViewedCourse());
         viewedCourse = null;
@@ -303,73 +303,5 @@ public class CourseController implements Serializable {
         return courseEndPoint.findByShortName(shortName);
     }
 
-//    @Deprecated
-//    public List<Course> getFutureCourses1() {//todo -  kwrenda
-//
-//        Date date = new Date();
-//        List<Course> futureCourses = new ArrayList();
-//        List<Course> allCourses = getAllCourses();
-//        for (Course course : allCourses) {
-//            if (course.getDateOfStart().after(date)) {
-//                futureCourses.add(course);
-//            }
-////to zmienic z powrotem
-//        }
-//
-//        return futureCourses;
-//    }
-//
-//    @Deprecated
-//    public Payment getViewedCoursePaymentForLogged() {
-//        long idUzer = ((Runner) uzerController.getLoggedUser()).getId();
-//        List<Payment> payments = getViewedCourse().getPayments();
-//
-//        for (Payment payment : payments) {
-//            if (idUzer == (long) payment.getRunner().getId()) {
-//                return payment;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    @Deprecated
-//    public void delete(Course courseForDelete) {
-//
-//        courseForDelete.getOrganiserOfTheCourse().getCourses().remove(courseForDelete);
-//        //   courseEndPoint.remove(courseForDelete);
-//
-//    }
-//    @Deprecated
-//    public void payForViewedRun() {
-//
-//        if (getViewedCourse().isPaymentRequired()) {
-//           
-//            Payment coursePaymentForLoggedRunner = getViewedCoursePaymentForLoggedRunner();
-//            coursePaymentForLoggedRunner.setCoursePayed(true);
-//            paymentController.saveEdited(coursePaymentForLoggedRunner);
-//            
-//        }
-//    }
-//    @Deprecated
-//    public void signRunnerOutFromCourse() {
-//        Payment currentPayment = getViewedCoursePaymentForLoggedRunner();
-//        paymentController.delete(currentPayment);
-//        getViewedCourse().removePayment(currentPayment);
-//        ((Runner) appControler.getLoggedUzer()).removePayment(currentPayment);
-//    }
-//
-//    @Deprecated
-//    public String deleteViewedCourseFromMyList() throws Exception {
-//
-//        deleteCourse(this.getViewedCourse());
-//        viewedCourse = null;
-//
-//        return "listOfCourses";
-//    }
-//
-//    @Deprecated
-//    public boolean isAvalibleRunnersLimits() {
-//        // courseEndPoint.refresh(viewedCourse);//blad optymistic lock
-//        return (viewedCourse.getPayments().size()) < (viewedCourse.getRunnersLimit());
-//    }
+
 }

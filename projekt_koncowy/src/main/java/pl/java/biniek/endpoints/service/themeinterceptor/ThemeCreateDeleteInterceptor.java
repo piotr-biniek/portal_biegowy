@@ -8,6 +8,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import pl.java.biniek.endpoints.ThemeEndPoint;
 import pl.java.biniek.endpoints.UzerEndPoint;
+import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.model.Uzer;
 
 
@@ -29,7 +30,7 @@ public class ThemeCreateDeleteInterceptor {
      * 
      */
      @AroundInvoke
-    public Object ceateDeleteTheme(InvocationContext invocation) throws Exception {
+    public Object ceateDeleteTheme(InvocationContext invocation) throws  Exception {
         //String uzerEmail;
         Uzer uzer;
         Object[] parameters = invocation.getParameters();

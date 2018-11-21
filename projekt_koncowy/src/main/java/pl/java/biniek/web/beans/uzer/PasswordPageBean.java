@@ -68,7 +68,7 @@ public class PasswordPageBean implements Serializable {
 
     }
 
-    public String saveNewPassword() throws Exception {   //
+    public String saveNewPassword() throws BasicApplicationException {   //
 
         Uzer uzer = this.getLoggdUzer();
         String haslo;

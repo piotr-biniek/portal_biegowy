@@ -354,36 +354,7 @@ public class Course extends AbstractEntity implements Serializable {//model!!
 
     ;
 
-    /**
-     * Get the value of Runners
-     *
-     * @return the value of Runners
-     */
- //@@X   public Set getRunners() {
- //@@X       return runners;
-  //@@X  }
-
-    /**
-     * Adds the runner to the course
-     *
-     */
-  //@@X  public void addRunner(Runner runner) throws Exception {
-   //@@X     if (runnersLimit <= runners.size()) {
-    //@@X        throw new Exception();
-    //@@X    } else {
-   //@@X         runners.add(runner);
-     //@@X   }
-
-   //@@X }
-
-    /**
-     * Removes the runner from the course
-     *
-     */
-  //@@X  public void removeRunner(Runner runner) {
-    //@@X    runners.remove(runner);
-  //@@X  }
-
+ 
     /**
      * Get the value of distance
      *

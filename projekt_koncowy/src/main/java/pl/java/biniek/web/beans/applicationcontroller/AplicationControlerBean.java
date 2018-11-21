@@ -1,6 +1,7 @@
 package pl.java.biniek.web.beans.applicationcontroller;
 
 //package org.primefaces.showcase.view.message;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -24,7 +25,7 @@ public class AplicationControlerBean implements Serializable {
     AplicationController aplicationController;
 
     //Theme theme;
-    public void resetSession() throws Exception {
+    public void resetSession() throws  IOException {
      AplicationController.resetSession();
       
       

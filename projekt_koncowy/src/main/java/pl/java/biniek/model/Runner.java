@@ -129,25 +129,6 @@ public class Runner extends Uzer implements Serializable {
     }
 
     /**
-     * Get the value of coursesOfRunner
-     *
-     * @return the value of coursesOfRunner
-     */
-    //@@X   public Set getCoursesOfRunner() {
-//@@X        return coursesOfRunner;
-//@@X    }
-    /**
-     * Adds new Course for runner if it is not already present
-     *
-     * @param course
-     * @return <tt>true</tt> if this set did not already contain the specified
-     * element
-     */
-//@@X    public boolean addCourse(Course course) throws Exception {
-//        course.addRunner(this);
-//@@X        return coursesOfRunner.add(course);
-//@@X    }
-    /**
      * Get the value of dateOfBirth
      *
      * @return the value of dateOfBirth

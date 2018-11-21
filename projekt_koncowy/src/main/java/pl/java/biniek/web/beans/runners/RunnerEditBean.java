@@ -40,7 +40,7 @@ public class RunnerEditBean implements Serializable {
         return uzerControler;
     }
 
-    public String save() throws Exception {
+    public String save() throws BasicApplicationException {
 // 
 
         return uzerControler.saveEditedRunner(runner);
