@@ -47,7 +47,9 @@
 
 
                         <h:outputLabel value="#{msg['forms.registerrunner.birthdate']}"/>
-                        <p:calendar id="birth" value="#{registrationBeanUser.runner.dateOfBirth}"  size="10" pattern="dd-MM-yyyy" mask="true" required="true" maxdate="#{courseWizard.today}"/>
+                        <p:calendar id="birth" value="#{registrationBeanUser.runner.dateOfBirth}"  
+                                    converter="localDateConverter" size="10" 
+                                    pattern="yyyy-MM-dd" mask="true" required="true" maxdate="#{courseWizard.today}"/>
                          <p:message for="birth" />
 
                         <h:outputLabel value="#{msg['forms.phone']}* :" />
