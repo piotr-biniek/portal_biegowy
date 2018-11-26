@@ -28,7 +28,7 @@
 
 
                         <h:outputText value= "#{msg['forms.registerrunner.birthdate']} "/>
-                        <h:outputText value="#{runnerDetailsBean.runnerControler.getOutputDate(runnerDetailsBean.runnerControler.viewedRunner.dateOfBirth)}"  />
+                        <h:outputText value="#{runnerDetailsBean.runnerControler.viewedRunner.dateOfBirth}"  />
 
                              <h:outputText value= "#{msg['forms.registerrunner.sex']} "/>
                              <h:outputText value="#{msg['forms.sex.male']} " rendered="#{aplicationControlerBean.testButtons or runnerDetailsBean.runnerControler.viewedRunner.isMale}"  />
