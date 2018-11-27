@@ -20,7 +20,7 @@
 
 
         <p:column headerText="#{msg['forms.addcours.startday']}" sortBy="#{iteratorCourse.dateOfStart}">
-            <h:outputText value="#{pageBeanCourses.getOutputDateTime(iteratorCourse.dateOfStart)}" />
+            <h:outputText converter="localDateTimeConverter"  value="#{iteratorCourse.dateOfStart}" />
 
         </p:column>
 

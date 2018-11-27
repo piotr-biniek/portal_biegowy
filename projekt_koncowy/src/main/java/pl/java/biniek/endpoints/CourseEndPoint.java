@@ -5,17 +5,16 @@
  */
 package pl.java.biniek.endpoints;
 
-import pl.java.biniek.endpoints.service.MailServiceGmail;
 import pl.java.biniek.exceptions.NotEmptyPaymentListException;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.faces.application.FacesMessage;
 import javax.interceptor.Interceptors;
 import pl.java.biniek.exceptions.BasicApplicationException;
 import pl.java.biniek.exceptions.NoPaymentRequiredException;
@@ -29,7 +28,6 @@ import pl.java.biniek.model.Organiser;
 import pl.java.biniek.model.Payment;
 import pl.java.biniek.model.Runner;
 import pl.java.biniek.model.Uzer;
-import pl.java.biniek.web.beans.controlers.AplicationController;
 //import pl.java.biniek.model.Course;
 
 /**
@@ -49,14 +47,12 @@ public class CourseEndPoint implements Serializable {
     @EJB
     private UzerEndPoint uzerEndPoint;
 
-
     @RolesAllowed({"Organiser", "Administrator"})
     private void remove(Course course) {
         courseFacade.remove(course);
 
     }
 
-    
     public List<Course> getAllCourses() {
         return courseFacade.findAll();
 
@@ -78,8 +74,7 @@ public class CourseEndPoint implements Serializable {
     public void saveAfterEdit(Course course) {
 
         courseFacade.edit(course);
-        
-        
+
 // starczy prosta zasada - przed edit dobrze po edit Źle!!!!!!! :)
     }
 
@@ -98,7 +93,6 @@ public class CourseEndPoint implements Serializable {
         course.addPayment(payment);
 
         runner.addPayment(payment);
-        
 
         paymentEndPoint.createPayment(payment);
     }
@@ -119,7 +113,7 @@ public class CourseEndPoint implements Serializable {
         }
 
         if ((uzer instanceof Organiser) && !course.getPayments().isEmpty()) {
-           throw new NotEmptyPaymentListException();
+            throw new NotEmptyPaymentListException();
         } else {
             course.getOrganiserOfTheCourse().getCourses().remove(course);
             remove(course);
@@ -134,7 +128,7 @@ public class CourseEndPoint implements Serializable {
         }
 
         if (viewedCourse.isPaymentRequired()) {
-         
+
             Payment coursePaymentToPayFor = paymentEndPoint.findPaymentByUserAndCourse((Runner) loggedUser, viewedCourse);
             if (coursePaymentToPayFor != null) {
                 coursePaymentToPayFor.setCoursePayed(true);
@@ -158,8 +152,6 @@ public class CourseEndPoint implements Serializable {
 
     }
 
-
-
     @RolesAllowed({"Organiser"})
     public boolean checkIfNameExists(String name) {
         return courseFacade.checkByNameIfCourseExists(name);
@@ -171,15 +163,14 @@ public class CourseEndPoint implements Serializable {
     }
 
     public Course findByShortName(String shortName) {
-       return courseFacade.findByShortName(shortName);
+        return courseFacade.findByShortName(shortName);
     }
 
     public List<Course> getFutureCourses() {
-        Date date = new Date();
-       return  courseFacade.findBeforeDate(date);
-              
-    }
+        LocalDateTime date = LocalDateTime.now();
+        return courseFacade.findBeforeDate(date);
 
+    }
 
     public boolean isAvalibleRunnersLimit(Course viewedCourse) {
         return (viewedCourse.getPayments().size()) < (viewedCourse.getRunnersLimit());

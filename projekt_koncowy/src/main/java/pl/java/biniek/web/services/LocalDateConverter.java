@@ -5,6 +5,7 @@
  */
 package pl.java.biniek.web.services;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -33,7 +34,9 @@ public class LocalDateConverter implements javax.faces.convert.Converter {
         if (value instanceof Date) {
 
             Date dateValue = (Date) value;
-            return dateValue.toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            sdf.format(value);
+            return sdf.format(value);
        
         } else {
             LocalDate dateValue = (LocalDate) value;
