@@ -16,6 +16,7 @@
 package pl.java.biniek.web.beans.runners;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -40,34 +41,28 @@ public class RunnerDetailsBean implements Serializable {
 
     Runner runner;
 
+    public Runner getRunner() {
+        return runner;
+    }
+
+    public void setRunner(Runner runner) {
+        this.runner = runner;
+    }
+
+    
+    
+    
     @PostConstruct
     public void init() {
         runner = uzerControler.getViewedRunner();
     }
 
-    public UzerController getRunnerControler() {
-        return uzerControler;
-    }
 
-    public UzerController getUzerControler() {
-        return uzerControler;
-    }
-
-    public CourseController getCourseController() {
-        return courseController;
-    }
-
-//    public String listOfRuns() {
-//        courseController.setRunner(runner);
-//        uzerControler.setViewedRunner(null);
-//        return "listOfCourses";
-//
-//    }
 
     public String editRunnerFromDetails() throws WrongUzerApplicationException {
-        if ((uzerControler.getLoggedUser().getId() == uzerControler.getViewedRunner().getId()) || (uzerControler.getLoggedUser() instanceof Administrator)) {
+        if ((Objects.equals(uzerControler.getLoggedUser().getId(), uzerControler.getViewedRunner().getId())) || (uzerControler.getLoggedUser() instanceof Administrator)) {
             uzerControler.setEditetRunner(runner);
-            //uzerControler.setViewedRunner(null);
+           
             return "runnerEdit";
         } else {
             throw new WrongUzerApplicationException();

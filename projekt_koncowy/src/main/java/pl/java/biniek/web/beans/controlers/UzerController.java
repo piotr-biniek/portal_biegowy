@@ -53,11 +53,10 @@ public class UzerController implements Serializable {
         this.viewedOrganiser = viewedOrganiser;
     }
 
-    public int birthYear(Date date) {
-        LocalDate ld;
-        LocalDate lDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return lDate.getYear();
-
+    public int birthYear(LocalDate date) {
+        
+       return date.getYear();
+       
     }
 
     public String getSex(boolean isMale) {// uzupelnic internacjonalizacje

@@ -5,7 +5,7 @@
  */
 package pl.java.biniek.facade;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -69,13 +69,11 @@ public class CourseFacade extends AbstractFacade<Course> {
         Query q = em.createNamedQuery("Course.findById");
         q.setParameter("id", id);
         return (Course) q.getSingleResult();
-
     }
-        public List<Course> findBeforeDate(Date date) {
+        public List<Course> findBeforeDate(LocalDateTime date) {
 
         Query tq = em.createNamedQuery("Course.findBeforeDate");
         tq.setParameter("dateOfStart", date);
-
         return  tq.getResultList();
     }
 }

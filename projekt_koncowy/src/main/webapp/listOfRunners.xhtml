@@ -31,11 +31,10 @@
                             <h:outputText value="#{iteratorRunner.lastName}" />
                         </p:column>
 
-
                         <p:column headerText="#{msg['forms.runner.birthyear']}">
                             <h:outputText value="#{dtListOfRunners.runnerControler.birthYear(iteratorRunner.dateOfBirth)}" />
                         </p:column>
-
+                        
                         <p:column headerText="#{msg['forms.registerrunner.sex']}">
                             <h:outputText value="#{msg['forms.runner.sexfemale']}" rendered="#{aplicationControlerBean.testButtons or !iteratorRunner.isMale}" />
                              <h:outputText value="#{msg['forms.runner.sexmale']}" rendered="#{aplicationControlerBean.testButtons or iteratorRunner.isMale}" />
@@ -45,6 +44,23 @@
                         <p:column headerText="#{msg['forms.actions']}">
                             <p:commandButton value="#{msg['buttons.details']}" action="#{dtListOfRunners.setViewed(iteratorRunner)}"/>
                         
+
+                        </p:column>                        
+
+                    </p:dataTable>
+
+
+
+
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>
+
 <!--                            <p:commandButton value="#{msg['buttons.edit']}" action="#{dtListOfRunners.editRunner(iteratorRunner)}"/>
                      
 
@@ -59,9 +75,6 @@
                                 
                             </p:confirmDialog>
 -->
-
-                        </p:column>                        
-
                         <!--
                         
                           <p:calendar value="#{iteratorRunner.dateOfStart}"  pattern="dd/MM/yyyy HH:mm" />
@@ -74,16 +87,3 @@
                                                 <f:facet name="paginatorBottomRight">
                                                     <p:commandButton type="button" icon="fa fa-cloud-upload" />
                                                 </f:facet>-->
-                    </p:dataTable>
-
-
-
-
-
-                </h:form>
-            </ui:define>
-
-        </ui:composition>
-
-    </h:body>
-</html>

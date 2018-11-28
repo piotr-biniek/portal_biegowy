@@ -35,7 +35,18 @@
 
 
                         <p:outputLabel for="datetime" value="#{msg['forms.addcours.startday']}* : " />
-                        <p:calendar id="datetime" value="#{courseEditBean.editedCourse.dateOfStart}" pattern="dd/MM/yyyy HH:mm" required="true" mindate="#{courseWizard.today}"/>
+
+                        <p:calendar  id="datetime" value="#{courseEditBean.editedCourse.dateOfStart}" 
+                                     converter="localDateTimeConverter" pattern="yyyy-MM-dd HH:mm" 
+                                     mask="true" required="true" mindate="#{courseWizard.today}"/>
+
+
+<!--                        <p:calendar id="datetime" value="#{courseEditBean.editedCourse.dateOfStart}" 
+            converter="localDateTimeConverter" pattern="dd/MM/yyyy HH:mm" 
+            required="true" mindate="#{courseWizard.today}"/>-->
+
+
+
                         <p:message for="datetime" />
 
                         <p:outputLabel  value="#{msg['forms.addcours.runnerslimit']}* : " />

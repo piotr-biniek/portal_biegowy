@@ -21,25 +21,25 @@
                             <h:outputText value = " ${msg['title.runerdetails']}" />
                         </f:facet>
                         <h:outputText value="#{msg['forms.registerrunner.fname']} "/>
-                        <h:outputText value="#{runnerDetailsBean.runnerControler.viewedRunner.firstName}"  />
+                        <h:outputText value="#{runnerDetailsBean.runner.firstName}"  />
 
                         <h:outputText value="#{msg['forms.registerrunner.lname']} " />
-                        <h:outputText value="#{runnerDetailsBean.runnerControler.viewedRunner.lastName}"  />
+                        <h:outputText value="#{runnerDetailsBean.runner.lastName}"  />
 
 
                         <h:outputText value= "#{msg['forms.registerrunner.birthdate']} "/>
-                        <h:outputText value="#{runnerDetailsBean.runnerControler.getOutputDate(runnerDetailsBean.runnerControler.viewedRunner.dateOfBirth)}"  />
+                        <h:outputText value="#{runnerDetailsBean.runner.dateOfBirth}"  />
 
                              <h:outputText value= "#{msg['forms.registerrunner.sex']} "/>
-                             <h:outputText value="#{msg['forms.sex.male']} " rendered="#{aplicationControlerBean.testButtons or runnerDetailsBean.runnerControler.viewedRunner.isMale}"  />
-                             <h:outputText value="#{msg['forms.sex.female']}" rendered="#{aplicationControlerBean.testButtons or !runnerDetailsBean.runnerControler.viewedRunner.isMale}"  />
+                             <h:outputText value="#{msg['forms.sex.male']} " rendered="#{aplicationControlerBean.testButtons or runnerDetailsBean.runner.isMale}"  />
+                             <h:outputText value="#{msg['forms.sex.female']}" rendered="#{aplicationControlerBean.testButtons or !runnerDetailsBean.runner.isMale}"  />
                          
                     
                         <p:outputLabel  value="#{msg['forms.email']} " />
-                        <p:outputLabel  value="#{runnerDetailsBean.runnerControler.viewedRunner.email}"  />
+                        <p:outputLabel  value="#{runnerDetailsBean.runner.email}"  />
 
                           <p:outputLabel value="#{msg['forms.phone']} " />
-                         <p:outputLabel value="#{runnerDetailsBean.runnerControler.viewedRunner.phone}"/>
+                         <p:outputLabel value="#{runnerDetailsBean.runner.phone}"/>
 
 
                     </p:panelGrid>
@@ -71,4 +71,3 @@
 
 </html>
 
-<!--                    <p:commandButton value="#{msg['buttons.coursesofrunner']}" action="#{runnerDetailsBean.listOfRuns()}"  />-->

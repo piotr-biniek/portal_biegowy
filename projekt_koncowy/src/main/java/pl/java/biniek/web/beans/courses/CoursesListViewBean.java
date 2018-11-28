@@ -2,8 +2,9 @@ package pl.java.biniek.web.beans.courses;
 
 import pl.java.biniek.web.beans.controlers.CourseController;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import static java.time.LocalDateTime.now;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -45,10 +46,17 @@ private List<Course> futureCourses;
     }
 //
 
-    public String getOutputDateTime(Date date) {
+    public String getOutputDateTime(LocalDateTime date) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh.mm");
-        return formatter.format(date);
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh.mm");
+//        return formatter.format(date);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        String formatedDateTime = date.format(formatter);
+
+       
+
+    return formatedDateTime;
     }
 
    

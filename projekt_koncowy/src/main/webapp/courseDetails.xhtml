@@ -28,7 +28,7 @@
 
 
                         <p:outputLabel value= "#{msg['forms.addcours.startday']} "/>
-                        <p:outputLabel value="#{  courseDetailsBean.getOutputDateTime(courseDetailsBean.viewedCourse.dateOfStart)}" styleClass="outputLabel"/>
+                        <p:outputLabel value="#{ courseDetailsBean.viewedCourse.dateOfStart}" converter="localDateTimeConverter"  styleClass="outputLabel"/>
 
                         <p:outputLabel value= "#{msg['forms.addcours.distance']} "/>
                         <p:outputLabel value="#{courseDetailsBean.viewedCourse.distance}" styleClass="outputLabel"/>

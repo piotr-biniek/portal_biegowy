@@ -33,6 +33,16 @@ public class CourseWizard implements Serializable {
     private boolean skip;
 
     private Course course = new Course();
+    
+    Date date = getToday();
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Course getCourse() {
         return course;

@@ -51,7 +51,8 @@ public class ParticipantRunnerViewBean implements Serializable {
             runner.setFirstName(payment1.getRunner().getFirstName());
             runner.setLastName(payment1.getRunner().getLastName());
             runner.setIsMale(payment1.getRunner().getIsMale());
-            runner.setBirthYare(this.birthYear(payment1.getRunner().getDateOfBirth()));
+            runner.setBirthYare((payment1.getRunner().getDateOfBirth()).getYear());
+            //  runner.setBirthYare(this.birthYear(payment1.getRunner().getDateOfBirth()));
             runner.setPayed(payment1.isCoursePayed());
             participantRunners.add(runner);
 
@@ -59,7 +60,7 @@ public class ParticipantRunnerViewBean implements Serializable {
 
         return participantRunners;
     }
-
+@Deprecated
     public int birthYear(Date date) {
 
         LocalDate lDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
